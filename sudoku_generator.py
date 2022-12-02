@@ -61,7 +61,7 @@ class SudokuGenerator:
     '''
 
     def valid_in_row(self, row, num):
-        for i in self.get_board()[row - 1]:
+        for i in self.get_board()[row]:
             if num == i:
                 return False
         return True
@@ -80,7 +80,8 @@ class SudokuGenerator:
     def valid_in_col(self, col, num):
         for row in self.get_board():
             for index, num_cols in enumerate(row):
-                if index == col - 1:
+                # fixes the no repeats vertically
+                if index == col:
                     if num_cols == num:
                         return False
         return True
@@ -98,6 +99,7 @@ class SudokuGenerator:
 	Return: boolean
     '''
 
+    # checks repeats diagonally 3 X 3
     def valid_in_box(self, row_start, col_start, num):
         for row in self.get_board()[row_start - 1:row_start + 2]:
             for col in row[col_start - 1:col_start + 2]:
