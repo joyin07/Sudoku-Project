@@ -267,20 +267,20 @@ class Cell:
         pass
 
 class Board():
-    def __init__(self,width,height,screen,difficulty):
+    def __init__(self, width, height, screen, difficulty):
         self.width = width
         self.height = height
     def draw(self):
         pass
-    def select(self,row,col):
+    def select(self, row, col):
         pass
-    def click(self,x,y):
+    def click(self, x, y):
         pass
     def clear(self):
         pass
-    def sketch(self,value):
+    def sketch(self, value):
         pass
-    def place_number(self,value):
+    def place_number(self, value):
         pass
     def reset_to_original(self):
         pass
