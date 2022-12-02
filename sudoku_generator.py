@@ -7,7 +7,7 @@ https://www.geeksforgeeks.org/program-sudoku-generator/
 """
 
 
-# adding initial comment
+# class to create Sudoku
 class SudokuGenerator:
     '''
 	create a sudoku board - initialize class variables and set up the 2D board

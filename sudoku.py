@@ -48,7 +48,7 @@ def draw_game_start(screen):
     easy_rectangle = easy_surface.get_rect(
         center=(600 // 2 - 200, 600 // 2 + 50))
     med_rectangle = med_surface.get_rect(
-        center = (600 // 2, 600 // 2 + 50))
+        center=(600 // 2, 600 // 2 + 50))
     hard_rectangle = hard_surface.get_rect(
         center=(600 // 2 + 200, 600 // 2 + 50))
 
@@ -57,6 +57,7 @@ def draw_game_start(screen):
     screen.blit(med_surface, med_rectangle)
     screen.blit(hard_surface, hard_rectangle)
 
+    # display level of difficulty of choice
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -67,7 +68,7 @@ def draw_game_start(screen):
                     return "easy"
                 elif med_rectangle.collidepoint(event.pos):
                     # If the mouse is on the quit button, exit the program
-                    return "med"
+                    return "medium"
                 elif hard_rectangle.collidepoint(event.pos):
                     return "hard"
         pygame.display.update()
