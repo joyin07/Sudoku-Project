@@ -28,7 +28,7 @@ class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
         self.row_length = row_length
         self.remove_cells = removed_cells
-        self.box_length = math.sqrt(self.row_length)
+        self.box_length = int(math.sqrt(self.row_length))
         self.board = [["-" for i in range(9)] for j in range(9)]
 
     '''
@@ -298,3 +298,9 @@ class Board():
         pass
     def check_board(self):
         pass
+
+sudoku = SudokuGenerator(9, 51)
+sudoku.fill_diagonal()
+sudoku.fill_remaining(0, sudoku.box_length)
+#sudoku.fill_values()
+sudoku.print_board()
