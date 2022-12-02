@@ -41,14 +41,8 @@ class SudokuGenerator:
     def get_board(self):
         return [[col for col in row] for row in self.board]
 
-    '''
-	Displays the board to the console
-    This is not strictly required, but it may be useful for debugging purposes
-
-	Parameters: None
-	Return: None
-    '''
-
+    # displays board to console
+    # returns nothing
     def print_board(self):
         for row in self.get_board():
             for col in row:
@@ -274,7 +268,8 @@ class Cell:
 
 class Board():
     def __init__(self,width,height,screen,difficulty):
-        pass
+        self.width = width
+        self.height = height
     def draw(selfs):
         pass
     def select(self,row,col):

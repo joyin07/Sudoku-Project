@@ -48,7 +48,7 @@ def draw_game_start(screen):
     easy_rectangle = easy_surface.get_rect(
         center=(600 // 2 - 200, 600 // 2 + 50))
     med_rectangle = med_surface.get_rect(
-        center=(600 // 2, 600 // 2 + 50))
+        center = (600 // 2, 600 // 2 + 50))
     hard_rectangle = hard_surface.get_rect(
         center=(600 // 2 + 200, 600 // 2 + 50))
 
