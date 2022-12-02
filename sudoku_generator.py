@@ -255,50 +255,6 @@ def generate_sudoku(size, removed):
     return board
 
 
-class Cell:
-    def __init__(self, value, row, col, screen):
-        self.value = value
-        self.row = row
-        self.col = col
-        self.screen = screen
-
-    def set_cell_value(self, value):
-        pass
-
-    def set_sketched_value(self, value):
-        pass
-
-    def draw(self):
-        pass
-
-
-# create main class Board to create the entire Sudoku game board
-class Board():
-    def __init__(self, width, height, screen, difficulty):
-        self.width = width
-        self.height = height
-    # draws the entire Sudoku grid
-    def draw(self):
-        pass
-    def select(self, row, col):
-        pass
-    def click(self, x, y):
-        pass
-    def clear(self):
-        pass
-    def sketch(self, value):
-        pass
-    def place_number(self, value):
-        pass
-    def reset_to_original(self):
-        pass
-    def is_full(self):
-        pass
-    def update_board(self):
-        pass
-    def check_board(self):
-        pass
-
 sudoku = SudokuGenerator(9, 51)
 sudoku.fill_diagonal()
 sudoku.fill_remaining(0, sudoku.box_length)
