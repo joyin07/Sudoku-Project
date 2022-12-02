@@ -254,7 +254,7 @@ def generate_sudoku(size, removed):
 
 
 class Cell:
-    def __init__(selfs, value, row, col, screen):
+    def __init__(self, value, row, col, screen):
         pass
 
     def set_cell_value(self, value):
@@ -270,7 +270,7 @@ class Board():
     def __init__(self,width,height,screen,difficulty):
         self.width = width
         self.height = height
-    def draw(selfs):
+    def draw(self):
         pass
     def select(self,row,col):
         pass
