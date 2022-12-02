@@ -269,10 +269,13 @@ class Cell:
     def draw(self):
         pass
 
+
+# create main class Board to create the entire Sudoku game board
 class Board():
     def __init__(self, width, height, screen, difficulty):
         self.width = width
         self.height = height
+    # draws the entire Sudoku grid
     def draw(self):
         pass
     def select(self, row, col):
