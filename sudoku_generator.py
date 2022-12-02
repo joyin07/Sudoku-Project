@@ -141,7 +141,12 @@ class SudokuGenerator:
     '''
 
     def fill_box(self, row_start, col_start):
-        pass
+        num_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        for row_box1 in self.board[row_start:row_start + 3]:
+            for col_box1 in range(col_start, col_start + 3):
+                num = random.choice(num_list)
+                row_box1[col_box1] = num
+                num_list.remove(num)
 
     '''
     Fills the three boxes along the main diagonal of the board
@@ -153,16 +158,10 @@ class SudokuGenerator:
 
     def fill_diagonal(self):
         start = 0
-        end = 3
         for i in range(3):
-            num_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-            for row_box1 in self.board[start:end]:
-                for col_box1 in range(start, end):
-                    num = random.choice(num_list)
-                    row_box1[col_box1] = num
-                    num_list.remove(num)
+            self.fill_box(start, start)
             start += 3
-            end += 3
+
 
     '''
     DO NOT CHANGE
