@@ -141,12 +141,21 @@ def draw_game_over(screen):
                     return draw_game_start(screen)
 def main():
     game_over = False
-    entered_num = None
+    entered_num = 0
     clicked_row = None
     clicked_col = None
     pygame.init()
     screen = pygame.display.set_mode((600, 640))
     pygame.display.set_caption("Sudoku")
+    sketched_value_grid = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
     mode = draw_game_start(screen)
     sudoku_board = Board(600, 640, screen, mode)
@@ -171,14 +180,30 @@ def main():
         if j == 3:
             buffer_row += 6
             j = 0
+    button_color = (250, 70, 22)  # orange
+    button_font = pygame.font.Font(None, 30)
+    button_text = button_font.render("Reset", 1, (255, 255, 245))
+    button_surface = pygame.Surface((button_text.get_size()[0] + 10,
+                                     button_text.get_size()[1] + 10))
+    button_surface.fill(button_color)
+    button_surface.blit(button_text, (5, 5))
+
+    button_rectangle = button_surface.get_rect(
+        center= (100, 620))
+    screen.blit(button_surface, button_rectangle)
     pygame.display.update()
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                clicked_row = int(event.pos[1]/64)
-                clicked_col = int(event.pos[0]/64)
+                clicked_row = int(event.pos[1]//67)
+                clicked_col = int(event.pos[0]//67)
+                print(clicked_row, clicked_col)
+                first_cell = Cell(None, clicked_row, clicked_col, screen)
+                first_cell.draw_border(clicked_row, clicked_col, grid_num)
+
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
                     entered_num = 1
@@ -198,12 +223,21 @@ def main():
                     entered_num = 8
                 elif event.key == pygame.K_9:
                     entered_num = 9
+                elif event.key == pygame.K_RETURN:
+                    cell_fill = Cell(None, clicked_row, clicked_col, screen)
+                    cell_fill.set_final_value(sketched_value_grid)
+                    grid_num[clicked_row][clicked_col] = entered_num
+
+                else:
+                    print("Invalid Input: Please enter a number between 1 and 9")
+                    continue
                 cell_fill = Cell(entered_num, clicked_row, clicked_col, screen)
-                if cell_fill.set_sketched_value(grid_num):
+                cell_fill.draw_border(clicked_row, clicked_col, grid_num)
+                if cell_fill.set_sketched_value(grid_num, sketched_value_grid):
                     if event.key == pygame.K_RETURN:
-                        cell_fill.set_final_value(grid_num)
+                        cell_fill.set_final_value(sketched_value_grid)
                         grid_num[clicked_row][clicked_col] = entered_num
-                pygame.display.update()
+            pygame.display.update()
 
 
 
