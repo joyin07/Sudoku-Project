@@ -11,6 +11,7 @@ def draw_game_start(screen):
     title_color = (0, 33, 165)      # blue
     button_color = (250, 70, 22)    # orange
 
+    # to initialize title and button
     start_title_font = pygame.font.Font(None, 70)
     gm_font = pygame.font.Font(None, 60)
     button_font = pygame.font.Font(None, 40)
@@ -76,6 +77,7 @@ def draw_game_start(screen):
                     return 40
                 elif hard_rectangle.collidepoint(event.pos):
                     return 50
+# to display winner screen
 def draw_game_won(screen):
     screen_color = (255, 255, 245)
     screen.fill(screen_color)
@@ -108,6 +110,7 @@ def draw_game_won(screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rectangle.collidepoint(event.pos):
                     sys.exit()
+# to disaply lose screen
 def draw_game_over(screen):
     screen_color = (255, 255, 245)
     screen.fill(screen_color)
@@ -132,6 +135,7 @@ def draw_game_over(screen):
     button_rectangle = button_surface.get_rect(
         center=(600 // 2, 600 // 2 + 50))
     screen.blit(button_surface, button_rectangle)
+    # to loop events
     while True:
         for event in pygame.event.get():
             pygame.display.update()
@@ -140,6 +144,7 @@ def draw_game_over(screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rectangle.collidepoint(event.pos):
                     main()
+# to draw the screen of game with grid
 def draw_game_screen(screen, grid_num, emp_coord, mode, user_submit_grid):
     sudoku_board = Board(600, 640, screen, mode)
     sudoku_board.draw()
@@ -161,6 +166,7 @@ def draw_game_screen(screen, grid_num, emp_coord, mode, user_submit_grid):
         if j == 3:
             buffer_row += 6
             j = 0
+# to print the numbers in the grid after each turn
 def compute_grid(sketched_value_grid, screen, grid_num, user_submit_grid, entered_num):
     for sketch_row_index, sketch_value_row in enumerate(sketched_value_grid):
         for sketch_col_index, sketch_value_col in enumerate(sketch_value_row):
@@ -173,10 +179,11 @@ def compute_grid(sketched_value_grid, screen, grid_num, user_submit_grid, entere
                 cell_fill = Cell(entered_num, final_row_index, final_col_index, screen)
                 cell_fill.set_final_value(user_submit_grid)
     bottom_buttons(screen)
+# to disaply the 3 bottom buttons: reset, restart, exit
 def bottom_buttons(screen):
     button_color = (250, 70, 22)  # orange
     button_font = pygame.font.Font(None, 30)
-
+    # for reset button
     button1_text = button_font.render("Reset", 1, (255, 255, 245))
     button_surface = pygame.Surface((button1_text.get_size()[0] + 10,
                                      button1_text.get_size()[1] + 10))
@@ -186,23 +193,16 @@ def bottom_buttons(screen):
     button1_rectangle = button_surface.get_rect(
         center=(100, 620))
     screen.blit(button_surface, button1_rectangle)
-
+    # for restart button
     button2_text = button_font.render("Restart", 1, (255, 255, 245))
     button_surface = pygame.Surface((button2_text.get_size()[0] + 10,
                                      button2_text.get_size()[1] + 10))
     button_surface.fill(button_color)
     button_surface.blit(button2_text, (5, 5))
-
     button2_rectangle = button_surface.get_rect(
         center=(300, 620))
     screen.blit(button_surface, button2_rectangle)
-
-    button2_text = button_font.render("Restart", 1, (255, 255, 245))
-    button_surface = pygame.Surface((button2_text.get_size()[0] + 10,
-                                     button2_text.get_size()[1] + 10))
-    button_surface.fill(button_color)
-    button_surface.blit(button2_text, (5, 5))
-
+    # for exit button
     button3_text = button_font.render("Exit", 1, (255, 255, 245))
     button_surface = pygame.Surface((button3_text.get_size()[0] + 10,
                                      button3_text.get_size()[1] + 10))
@@ -211,16 +211,19 @@ def bottom_buttons(screen):
     button3_rectangle = button_surface.get_rect(
         center=(500, 620))
     screen.blit(button_surface, button3_rectangle)
+# to draw borders: red outlines
 def borders_command(clicked_row, clicked_col, screen):
     first_cell = Cell(None, clicked_row, clicked_col, screen)
     color = (217, 33, 33)
     first_cell.draw_border(clicked_row, clicked_col, color)
+# to check if the red box outline is out of the screen
 def checking_offscreen(row, col, screen):
     greatest = 8
     least = 0
     if col > greatest or row > greatest or col < least or row < least:
         return True
     return False
+# checks to see if all cells are filled
 def checking_board_full(grid_num, user_submit_grid):
     for r_index, row in enumerate(grid_num):
         for c_index, col in enumerate(row):
@@ -228,7 +231,7 @@ def checking_board_full(grid_num, user_submit_grid):
                 if user_submit_grid[r_index][c_index] == 0:
                     return False
     return True
-
+# to check to see if number entered is in the correct cell and if user won or loss
 def checking_win_or_lose(grid_num, user_submit_grid, screen):
     for r_index, row in enumerate(grid_num):
         for c_index, col in enumerate(row):
@@ -250,7 +253,7 @@ def main():
     clicked_row = None
     clicked_col = None
     pygame.init()
-    screen = pygame.display.set_mode((600, 640))
+    screen = pygame.display.set_mode((600, 640))    # setting the game screen
     pygame.display.set_caption("Sudoku")
     sketched_value_grid = [[0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -271,21 +274,15 @@ def main():
          [0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0],
          [0, 0, 0, 0, 0, 0, 0, 0, 0]]
-
+    # storing mode
     mode = draw_game_start(screen)
-    # sudoku_board = Board(600, 640, screen, mode)
-    # sudoku_board.draw()
     grid_num = generate_sudoku(9, mode)
-    #solution = SudokuGenerator(9, mode)
-    #solution.fill_values()
-    #solution_board = solution.get_board()
-    #print("solution board:", solution_board)
     print("Grid num", grid_num)
     emp_coord = []
     draw_game_screen(screen, grid_num, emp_coord, mode, user_submit_grid)
     button_color = (250, 70, 22)  # orange
     button_font = pygame.font.Font(None, 30)
-
+    # buttons
     button1_text = button_font.render("Reset", 1, (255, 255, 245))
     button_surface = pygame.Surface((button1_text.get_size()[0] + 10,
                                      button1_text.get_size()[1] + 10))
@@ -306,12 +303,6 @@ def main():
         center=(300, 620))
     screen.blit(button_surface, button2_rectangle)
 
-    button2_text = button_font.render("Restart", 1, (255, 255, 245))
-    button_surface = pygame.Surface((button2_text.get_size()[0] + 10,
-                                     button2_text.get_size()[1] + 10))
-    button_surface.fill(button_color)
-    button_surface.blit(button2_text, (5, 5))
-
     button3_text = button_font.render("Exit", 1, (255, 255, 245))
     button_surface = pygame.Surface((button3_text.get_size()[0] + 10,
                                      button3_text.get_size()[1] + 10))
@@ -320,15 +311,14 @@ def main():
     button3_rectangle = button_surface.get_rect(
         center=(500, 620))
     screen.blit(button_surface, button3_rectangle)
-
+    # in order to loop until quit or won
     while game_cont:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN: # if mouse event from user
                 clicked_row = int(event.pos[1]//67)
                 clicked_col = int(event.pos[0]//67)
-
                 draw_game_screen(screen, grid_num, emp_coord, mode, user_submit_grid)
                 compute_grid(sketched_value_grid, screen, grid_num, user_submit_grid, entered_num)
                 if button1_rectangle.collidepoint(event.pos):
@@ -359,7 +349,7 @@ def main():
                     sys.exit()
                 else:
                     borders_command(clicked_row, clicked_col, screen)
-
+            # if user press keys
             if event.type == pygame.KEYDOWN:
                 num_entered = False
                 if event.key == pygame.K_1:
@@ -389,6 +379,7 @@ def main():
                 elif event.key == pygame.K_9:
                     entered_num = 9
                     num_entered = True
+                # when user clicks on enter
                 elif event.key == pygame.K_RETURN:
                     cell_fill = Cell(None, clicked_row, clicked_col, screen)
                     cell_fill.set_final_value(sketched_value_grid)
@@ -405,7 +396,7 @@ def main():
                     compute_grid(sketched_value_grid, screen, grid_num, user_submit_grid, entered_num)
                     borders_command(clicked_row, clicked_col, screen)
                 elif event.key == pygame.K_LEFT:
-                    clicked_col -= 1
+                    clicked_col -= 1    # to go backwards
                     if checking_offscreen(clicked_row, clicked_col, screen):
                         clicked_col += 1
                     draw_game_screen(screen, grid_num, emp_coord, mode, user_submit_grid)
@@ -426,9 +417,9 @@ def main():
                     compute_grid(sketched_value_grid, screen, grid_num, user_submit_grid, entered_num)
                     borders_command(clicked_row, clicked_col, screen)
                 else:
-                    print("Invalid Number")
+                    print("Invalid Number") # when invalid input entered
                     continue
-
+                # when user entered a number
                 if num_entered:
                     cell_fill = Cell(entered_num, clicked_row, clicked_col, screen)
                     if cell_fill.set_sketched_value(grid_num):
