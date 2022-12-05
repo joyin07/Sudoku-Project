@@ -2,6 +2,8 @@ import pygame, sys
 from Board import *
 from sudoku_generator import *
 from cell import *
+
+# start of game
 def draw_game_start(screen):
     screen_color = (255, 255, 245)
     screen.fill(screen_color)
