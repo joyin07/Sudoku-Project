@@ -19,8 +19,8 @@ class Board():
                 (((self.width-12)//3)*j+buff, 0),
                 (((self.width-12)//3)*j+buff, self.height-40),
                 6)
-            print((((self.width-12)//3)*j+buff, 0),
-                (((self.width-12)//3)*j+buff, self.height-40))
+            #print((((self.width-12)//3)*j+buff, 0),
+                #(((self.width-12)//3)*j+buff, self.height-40))
             # draw horizontal lines
             pygame.draw.line(
                 self.screen,
@@ -28,8 +28,8 @@ class Board():
                 (0, ((self.height-52)//3)*j+buff),
                 (self.width, ((self.height-52)//3)*j+buff),
                 6)
-            print((0, ((self.height-52)//3)*j+buff),
-                (self.width, ((self.height-52)//3)*j+buff))
+            #print((0, ((self.height-52)//3)*j+buff),
+                #(self.width, ((self.height-52)//3)*j+buff))
             buff += 6
 
         # length of individual cell is 196
@@ -45,8 +45,8 @@ class Board():
                     (buffer+(64 * mini_line + (buff_2*(mini_line-1))), 0),
                     (buffer+(64 * mini_line + (buff_2*(mini_line-1))), self.height - 40),
                     2)
-                print((buffer+(64 * mini_line + (buff_2*(mini_line-1))), 0),
-                    (buffer+(64 * mini_line + (buff_2*(mini_line-1))), self.height - 40))
+                #print((buffer+(64 * mini_line + (buff_2*(mini_line-1))), 0),
+                    #(buffer+(64 * mini_line + (buff_2*(mini_line-1))), self.height - 40))
                 # mini horizontal lines
                 pygame.draw.line(
                     self.screen,
@@ -54,8 +54,8 @@ class Board():
                     (0, buffer+(64 * mini_line + (buff_2*(mini_line-1)))),
                     (self.width, buffer+(64 * mini_line + (buff_2*(mini_line-1)))),
                     2)
-                print((0, buffer+(64 * mini_line + (buff_2*(mini_line-1)))),
-                    (self.width, buffer+(64 * mini_line + (buff_2*(mini_line-1)))))
+                #print((0, buffer+(64 * mini_line + (buff_2*(mini_line-1)))),
+                    #(self.width, buffer+(64 * mini_line + (buff_2*(mini_line-1)))))
             buffer += 202
         pygame.draw.line(
             self.screen,
@@ -64,21 +64,37 @@ class Board():
             (self.width, 404 + (64 * 3 + (2 * (3 - 1)))),
             2)
 
-    def select(self, row, col):
-        pass
-    def click(self, x, y):
-        pass
-    def clear(self):
-        pass
-    def sketch(self, value):
-        pass
-    def place_number(self, value):
-        pass
-    def reset_to_original(self):
-        pass
-    def is_full(self):
-        pass
-    def update_board(self):
-        pass
-    def check_board(self):
-        pass
+    def check_board(self, row, col, grid):
+        if self.valid_in_box(row - (row % 3), col - (col % 3), grid):
+            if self.valid_in_row(row, grid):
+                if self.valid_in_col(col, grid):
+                    return True
+        return False
+    def valid_in_row(self, row, grid):
+        memory = []
+        for i in grid[row]:
+            if i not in memory:
+                memory.append(i)
+            else:
+                return False
+        return True
+    def valid_in_col(self, col, grid):
+        memory = []
+        for row in grid:
+            for index, num_cols in enumerate(row):
+                if index == col:
+                    if num_cols not in memory:
+                        memory.append(num_cols)
+                    else:
+                        return False
+        return True
+    def valid_in_box(self, row_start, col_start, grid):
+        memory = []
+        for row in range(3):
+            for col in range(3):
+                if grid[row_start + row][col_start + col] not in memory:
+                    memory.append(grid[row_start + row][col_start + col])
+                else:
+                    print("box")
+                    return False
+        return True

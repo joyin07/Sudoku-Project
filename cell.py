@@ -15,8 +15,8 @@ class Cell:
             center=(self.col * 66 + 35, self.row * 66 + 38))
         self.screen.blit(num_surface, num_rectangle)
 
-    def set_sketched_value(self, value, sketched_value_grid):
-        if value[self.row][self.col] == 0:
+    def set_sketched_value(self, grid):
+        if grid[self.row][self.col] == 0 and self.value != 0:
             pygame.draw.rect(self.screen, (255, 255, 245),
                              pygame.Rect(self.col*66 +20, self.row*66 +20, 32, 32))
             pygame.display.flip()
@@ -25,7 +25,6 @@ class Cell:
             num_surface = num_font.render(f"{self.value}", 1, num_color)
             num_rectangle = num_surface.get_rect(
                 center=(self.col*66 + 35, self.row * 66 + 38))
-            sketched_value_grid[self.row][self.col] = self.value
             self.screen.blit(num_surface, num_rectangle)
             return True
         else:
@@ -41,18 +40,41 @@ class Cell:
             num_rectangle = num_surface.get_rect(
                 center=(self.col*66 + 35, self.row * 66 + 38))
             self.screen.blit(num_surface, num_rectangle)
-
         else:
             return False
-    def draw_border(self, row, col, grid):
-        pygame.draw.rect(self.screen, (217, 33, 33),
-                         pygame.Rect((self.col * 64) + 2, (self.row * 66) + 2, 64, 64), 2)
+    def draw_border(self, row, col, color):
+        if col in [0, 1, 2]:
+            if row in [0, 1, 2]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66, self.row * 65 + (self.row-2), 64, 66), 2)
+            elif row in [3, 4, 5]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66, self.row * 65 + (self.row-2) + 4, 64, 66), 2)
+            elif row in [6, 7, 8]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66, self.row * 65 + (self.row-2) + 8, 64, 66), 2)
+        elif col in [3, 4, 5]:
+            if row in [0, 1, 2]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66 + 2, self.row * 65 + (self.row-2), 66, 66), 2)
+            elif row in [3, 4, 5]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66 + 2, self.row * 65 + (self.row-2) + 4, 66, 66), 2)
+            elif row in [6, 7, 8]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66 + 2, self.row * 65 + (self.row-2) + 8, 66, 66), 2)
+        elif col in [6, 7, 8]:
+            if row in [0, 1, 2]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66 + 6, self.row * 65 + (self.row-2), 66, 66), 2)
+            elif row in [3, 4, 5]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66 + 6, self.row * 65 + (self.row-2) + 4, 66, 66), 2)
+            elif row in [6, 7, 8]:
+                pygame.draw.rect(self.screen, color,
+                                 pygame.Rect(self.col * 66 + 6, self.row * 65 + (self.row-2) + 8, 66, 66), 2)
         pygame.display.update()
 
-    def revert_boarder(self, row, col, grid):
-        pygame.draw.rect(self.screen, (255, 255, 245),
-                         pygame.Rect((self.row * 61) + 4, (self.row* 60)+64, 64, 64), 2)
-        pygame.display.update()
 
     def draw(self):
         if self.value != 0:

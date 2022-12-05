@@ -251,11 +251,14 @@ def generate_sudoku(size, removed):
     sudoku = SudokuGenerator(size, removed)
     sudoku.fill_values()
     board = sudoku.get_board()
+    print("Solution board: ", board)
     sudoku.remove_cells()
     board = sudoku.get_board()
     return board
 
+"""
 sudoku = SudokuGenerator(9, 20)
 sudoku.fill_diagonal()
 sudoku.fill_remaining(0, 3)
 sudoku.print_board()
+"""
